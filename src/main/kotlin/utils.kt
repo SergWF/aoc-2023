@@ -2,6 +2,9 @@ import kotlin.io.path.Path
 import kotlin.io.path.readLines
 import kotlin.math.pow
 
+val numberRegex = """\d+""".toRegex()
+
+fun String.extractNumbers(): List<Long> = numberRegex.findAll(this).map(MatchResult::value).map { it.toLong() }.toList()
 fun readData(taskFile: String): List<String> = Path("src/main/resources/$taskFile").readLines()
 
 

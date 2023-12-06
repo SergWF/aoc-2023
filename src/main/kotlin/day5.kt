@@ -32,7 +32,6 @@ fun getSeedLocation(seed: Long, sections: List<Section>): Long =
     sections.fold(seed) { acc, section -> section.getDestination(acc) }
 
 
-private val numberRegex = """\d+""".toRegex()
 
 fun getSection(name: String, lines: List<String>): Section {
     val start = lines.indexOf("$name:") + 1

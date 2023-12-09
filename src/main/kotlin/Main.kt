@@ -15,9 +15,11 @@ fun main() {
 //    val res = day7_1(lines = readData("day7.txt"))
 //    val res = day7_2(lines = readData("day7.txt"))
 //    val res = day8_1(lines = readData("day8.txt"))
-    val res = day8_2(lines = readData("day8.txt"))
+//    val res = day8_2(lines = readData("day8.txt"))
+//    val res = day9_1(lines = readData("day9.txt"))
+    val res = day9_2(lines = readData("day9.txt"))
 
-//    val res = day8_2(lines = readData("day8.2.test.txt"))
+//    val res = day9_2(lines = readData("day9.test.txt"))
 
     println("\n------\nresult: $res\n------")
 }

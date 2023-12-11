@@ -1,5 +1,7 @@
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
+import kotlin.math.abs
+import kotlin.math.log10
 import kotlin.math.pow
 
 val numberRegex = """\d+""".toRegex()
@@ -18,3 +20,30 @@ fun <T> List<T>.getFirstIndexOf(start: Int = 0, predicate: (T) -> Boolean): Int 
     ?: this.size
 
 fun String.containsOnly(char: Char) = this.all { it == char }
+
+fun printData(lines: List<String>) {
+    val rowCntLen = lines.size.toString().length
+    printHeader(lines[0].length, "".padStart(rowCntLen, ' '))
+    lines.forEachIndexed {i, line ->
+        val idx = i.toString()
+        println("${idx.padStart(rowCntLen-idx.length, ' ')}|$line")
+    }
+}
+
+fun printHeader(colCnt: Int, prefix: String) {
+    (0..<colCnt.toString().length).reversed().forEach { r ->
+        print(prefix)
+        (0..<colCnt).forEach { i -> print(i.get(r)) }
+        println()
+    }
+}
+
+fun Int.length() = when(this) {
+    0 -> 1
+    else -> log10(abs(toFloat())).toInt() + 1
+}
+
+fun Int.get(i: Int, space: Char = ' '): Char {
+    val s = this.toString().reversed()
+    return if(i>s.lastIndex) space else s[i]
+}

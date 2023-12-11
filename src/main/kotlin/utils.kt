@@ -16,3 +16,5 @@ fun <T> List<T>.getFirstIndexOf(start: Int = 0, predicate: (T) -> Boolean): Int 
     .map { it.index }
     .firstOrNull()
     ?: this.size
+
+fun String.containsOnly(char: Char) = this.all { it == char }

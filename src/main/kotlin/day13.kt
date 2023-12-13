@@ -1,16 +1,21 @@
-fun day13_1(lines: List<String>): Int {
-    var mirrorSum = 0
+fun day13_1(lines: List<String>): Int = lines.split().sumOf { printData(it); it.mirrorValue() ?: 0 }
 
-    val list = mutableListOf<String>()
-    (lines + "").forEach { line ->
+
+
+fun List<String>.split(): List<List<String>> =
+    (this).fold(mutableListOf<MutableList<String>>(mutableListOf())) { acc, line ->
         if (line.isNotEmpty()) {
-            list.add(line)
+            acc.last().add(line)
         } else {
-            mirrorSum += list.hor() ?: list.vert() ?: throw IllegalStateException()
-            list.clear()
+            acc.add(mutableListOf())
         }
+        acc
     }
-    return mirrorSum
+
+fun List<String>.mirrorValue(): Int? {
+    val res = this.hor() ?: this.vert()
+    println("res=$res")
+    return res
 }
 
 fun List<String>.hor(): Int? = this.map { it.toBinNum() }.mirrorIndex()?.let { it * 100 }

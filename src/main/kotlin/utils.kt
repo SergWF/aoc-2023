@@ -22,7 +22,7 @@ fun <T> List<T>.getFirstIndexOf(start: Int = 0, predicate: (T) -> Boolean): Int 
 fun String.containsOnly(char: Char) = this.all { it == char }
 
 fun printData(lines: List<String>) {
-    val rowCntLen = lines.size.toString().length
+    val rowCntLen = lines.size.toString().length + 1
     printHeader(lines[0].length, "".padStart(rowCntLen, ' '))
     lines.forEachIndexed {i, line ->
         val idx = i.toString()

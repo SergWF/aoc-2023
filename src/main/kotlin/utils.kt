@@ -29,6 +29,11 @@ fun printData(lines: List<String>) {
         println("${idx.padStart(rowCntLen-idx.length, ' ')}|$line")
     }
 }
+fun List<String>.pivot(): List<String> =
+    (0..this[0].lastIndex).map { idx -> this.map { it[idx] } }.map { it.joinToString("").reversed() }
+
+fun List<String>.pivotBack(): List<String> =
+    (0..this[0].lastIndex).reversed().map { idx -> this.map { it[idx] } }.map { it.joinToString("").reversed() }
 
 fun printHeader(colCnt: Int, prefix: String) {
     (0..<colCnt.toString().length).reversed().forEach { r ->
@@ -47,3 +52,13 @@ fun Int.get(i: Int, space: Char = ' '): Char {
     val s = this.toString().reversed()
     return if(i>s.lastIndex) space else s[i]
 }
+
+fun List<String>.splitByEmptyLine(): List<List<String>> =
+    (this).fold(mutableListOf<MutableList<String>>(mutableListOf())) { acc, line ->
+        if (line.isNotEmpty()) {
+            acc.last().add(line)
+        } else {
+            acc.add(mutableListOf())
+        }
+        acc
+    }

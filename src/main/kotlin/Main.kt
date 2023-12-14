@@ -1,8 +1,14 @@
+import kotlin.time.measureTimedValue
+
 fun main() {
+    val (value, timeTaken) = measureTimedValue {
 
-    val res = day13_1(lines = readData("day13.txt"))
-//    val res = day13_2(lines = readData("day13.txt"))
-//    val res = day13_2(lines = readData("day13.1.test.txt"))
+//        day14_1(lines = readData("day14.txt"))
+        day14_2(lines = readData("day14.txt"))
+//        day14_2(lines = readData("day14.1.test.txt"))
 
-    println("\n------\nresult: $res\n------")
+
+    }
+    println("\n------\nresult: $value (${timeTaken.inWholeMilliseconds} ms)\n------")
 }
+

@@ -47,13 +47,10 @@ fun cycles(source: Matrix, cnt: Int = 1): Matrix {
         }
     }
     return if (c.size == cnt) {
-        calculated.last().toMatrix()
+        matrix
     } else {
         val cycleLen = calculated.size - cycleStart - 1
-        val cyclesCount = (cnt - cycleStart) / cycleLen
-        val lastCycleEnds = cycleStart + cyclesCount * cycleLen
-        val shift = cnt - lastCycleEnds
-        val indexEqualCnt = cycleStart + shift - 1
+        val indexEqualCnt = cycleStart + (cnt - cycleStart) % cycleLen - 1
         val res = calculated[indexEqualCnt]
         res.toMatrix()
     }

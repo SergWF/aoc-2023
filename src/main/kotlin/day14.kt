@@ -39,7 +39,6 @@ fun cycles(source: Matrix, cnt: Int = 1): Matrix {
         val hash = matrix.turn().toHash()
         if (calculated.contains(hash)) {
             cycleStart = calculated.indexOf(hash)
-            calculated.add(hash)
             false
         } else {
             calculated.add(hash)
@@ -49,7 +48,7 @@ fun cycles(source: Matrix, cnt: Int = 1): Matrix {
     return if (c.size == cnt) {
         matrix
     } else {
-        val cycleLen = calculated.size - cycleStart - 1
+        val cycleLen = calculated.size - cycleStart
         val indexEqualCnt = cycleStart + (cnt - cycleStart) % cycleLen - 1
         val res = calculated[indexEqualCnt]
         res.toMatrix()

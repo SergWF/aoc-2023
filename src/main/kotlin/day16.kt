@@ -3,22 +3,37 @@ import Direction.N
 import Direction.S
 import Direction.W
 
-fun day16_1(lines: List<String>): Int {
-    lines
-        .also { printData(lines) }
-    notCheckedBeams.add(Beam(E, Position(0, -1)))
-    while (lines.runBeam()) { }
+fun day16_1(lines: List<String>): Int = run(lines, E, Position(0, -1))
+
+
+fun day16_2(lines: List<String>): Int =
+    Direction.entries.map { dir ->
+        lines.startPositions(dir).map { pos -> run(lines, dir, pos) }
+    }.flatten().max()
+
+
+fun Layout.startPositions(direction: Direction): List<Position> {
+    return when (direction) {
+        N -> (0..this.last().lastIndex).map { Position(this.lastIndex + 1, it) }
+        S -> (0..this.last().lastIndex).map { Position(-1, it) }
+        E -> (0..this.lastIndex).map { Position(it, -1) }
+        W -> (0..this.lastIndex).map { Position(it, this.lastIndex + 1) }
+    }
+}
+
+fun run(lines: List<String>, direction: Direction, startPos: Position): Int {
+    notCheckedBeams.clear()
+    checkedBeams.clear()
+    energized.clear()
+    notCheckedBeams.add(Beam(direction, startPos))
+    while (lines.runBeam()) {
+    }
     return energized.count() - 1
 }
 
-fun day16_2(lines: List<String>): Int = lines.also { printData(it) }.count()
-
 
 fun Layout.runBeam(): Boolean {
-    if (notCheckedBeams.isEmpty()) {
-        println("no beams, finish")
-        return false
-    }
+    if (notCheckedBeams.isEmpty()) return false
     val beam = notCheckedBeams.first()
     notCheckedBeams.remove(beam)
     checkedBeams.add(beam)
@@ -92,11 +107,8 @@ fun Layout.nextPos(beam: Beam): Position {
     }
 }
 
-data class Position(val line: Int, val col: Int) {
-    override fun toString(): String {
-        return "($line, $col)"
-    }
-}
+
+data class Position(val line: Int, val col: Int)
 
 /**
  * class describes point on the layout and direction the beam came from

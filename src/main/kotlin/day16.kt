@@ -1,18 +1,18 @@
-import Direction.E
-import Direction.N
-import Direction.S
-import Direction.W
+import MapDirection.E
+import MapDirection.N
+import MapDirection.S
+import MapDirection.W
 
 fun day16_1(lines: List<String>): Int = run(lines, E, Position(0, -1))
 
 
 fun day16_2(lines: List<String>): Int =
-    Direction.entries.map { dir ->
+    MapDirection.entries.map { dir ->
         lines.startPositions(dir).map { pos -> run(lines, dir, pos) }
     }.flatten().max()
 
 
-fun Layout.startPositions(direction: Direction): List<Position> {
+private fun Layout.startPositions(direction: MapDirection): List<Position> {
     return when (direction) {
         N -> (0..this.last().lastIndex).map { Position(this.lastIndex + 1, it) }
         S -> (0..this.last().lastIndex).map { Position(-1, it) }
@@ -21,7 +21,7 @@ fun Layout.startPositions(direction: Direction): List<Position> {
     }
 }
 
-fun run(lines: List<String>, direction: Direction, startPos: Position): Int {
+private fun run(lines: List<String>, direction: MapDirection, startPos: Position): Int {
     notCheckedBeams.clear()
     checkedBeams.clear()
     energized.clear()
@@ -42,17 +42,17 @@ fun Layout.runBeam(): Boolean {
     return notCheckedBeams.isNotEmpty()
 }
 
-enum class Direction {
+private enum class MapDirection {
     N, E, W, S;
 }
 
 typealias Layout = List<String>
 
-val notCheckedBeams = mutableSetOf<Beam>()
-val checkedBeams = mutableSetOf<Beam>()
-val energized = mutableSetOf<Position>()
-fun Layout.getChar(position: Position) = this[position.line][position.col]
-fun Layout.nextBeams(beam: Beam): List<Beam> {
+private val notCheckedBeams = mutableSetOf<Beam>()
+private val checkedBeams = mutableSetOf<Beam>()
+private val energized = mutableSetOf<Position>()
+private fun Layout.getChar(position: Position) = this[position.line][position.col]
+private fun Layout.nextBeams(beam: Beam): List<Beam> {
     if (!hasNext(beam)) return emptyList()
     val nextPos = nextPos(beam)
     return when (this.getChar(nextPos)) {
@@ -87,14 +87,14 @@ fun Layout.nextBeams(beam: Beam): List<Beam> {
     }
 }
 
-fun Layout.hasNext(beam: Beam): Boolean = when (beam.direction) {
+private fun Layout.hasNext(beam: Beam): Boolean = when (beam.direction) {
     N -> beam.position.line > 0
     S -> beam.position.line < this.lastIndex
     E -> beam.position.col < this[beam.position.line].lastIndex
     W -> beam.position.col > 0
 }
 
-fun Layout.nextPos(beam: Beam): Position {
+private fun Layout.nextPos(beam: Beam): Position {
 
     if (!hasNext(beam)) {
         throw IllegalStateException("no next ${beam.direction.name} from $beam.position")
@@ -108,9 +108,7 @@ fun Layout.nextPos(beam: Beam): Position {
 }
 
 
-data class Position(val line: Int, val col: Int)
-
 /**
  * class describes point on the layout and direction the beam came from
  */
-data class Beam(val direction: Direction, val position: Position)
+private data class Beam(val direction: MapDirection, val position: Position)

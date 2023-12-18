@@ -14,10 +14,10 @@ fun day16_2(lines: List<String>): Int =
 
 private fun Layout.startPositions(direction: MapDirection): List<Position> {
     return when (direction) {
-        N -> (0..this.last().lastIndex).map { Position(this.lastIndex + 1, it) }
-        S -> (0..this.last().lastIndex).map { Position(-1, it) }
-        E -> (0..this.lastIndex).map { Position(it, -1) }
-        W -> (0..this.lastIndex).map { Position(it, this.lastIndex + 1) }
+        N -> (0..this.last().lastIndex).map { Position(this.lastIndex.toLong() + 1, it.toLong()) }
+        S -> (0..this.last().lastIndex).map { Position(-1, it.toLong()) }
+        E -> (0..this.lastIndex).map { Position(it.toLong(), -1) }
+        W -> (0..this.lastIndex).map { Position(it.toLong(), this.lastIndex.toLong() + 1) }
     }
 }
 
@@ -51,7 +51,7 @@ typealias Layout = List<String>
 private val notCheckedBeams = mutableSetOf<Beam>()
 private val checkedBeams = mutableSetOf<Beam>()
 private val energized = mutableSetOf<Position>()
-private fun Layout.getChar(position: Position) = this[position.line][position.col]
+private fun Layout.getChar(position: Position) = this[position.line.toInt()][position.col.toInt()]
 private fun Layout.nextBeams(beam: Beam): List<Beam> {
     if (!hasNext(beam)) return emptyList()
     val nextPos = nextPos(beam)
@@ -90,7 +90,7 @@ private fun Layout.nextBeams(beam: Beam): List<Beam> {
 private fun Layout.hasNext(beam: Beam): Boolean = when (beam.direction) {
     N -> beam.position.line > 0
     S -> beam.position.line < this.lastIndex
-    E -> beam.position.col < this[beam.position.line].lastIndex
+    E -> beam.position.col < this[beam.position.line.toInt()].lastIndex
     W -> beam.position.col > 0
 }
 

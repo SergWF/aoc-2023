@@ -33,9 +33,6 @@ fun printData(lines: List<String>) {
 fun List<String>.pivot(): List<String> =
     (0..this[0].lastIndex).map { idx -> this.map { it[idx] } }.map { it.joinToString("").reversed() }
 
-fun List<String>.pivotBack(): List<String> =
-    (0..this[0].lastIndex).reversed().map { idx -> this.map { it[idx] } }.map { it.joinToString("").reversed() }
-
 fun printHeader(colCnt: Int, prefix: String) {
     (0..<colCnt.toString().length).reversed().forEach { r ->
         print(prefix)
@@ -69,7 +66,7 @@ fun Position.up(): Position = Position(this.line - 1, this.col)
 fun Position.left(): Position = Position(this.line, this.col - 1)
 fun Position.right(): Position = Position(this.line, this.col + 1)
 
-data class Position(val line: Int, val col: Int) {
+data class Position(val line: Long, val col: Long) {
     override fun toString(): String {
         return "($line,$col)"
     }

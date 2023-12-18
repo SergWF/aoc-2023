@@ -3,9 +3,9 @@ import kotlin.time.measureTimedValue
 fun main() {
     val (value, timeTaken) = measureTimedValue {
 
-//        day16_1(lines = readData("day16.txt"))
-        day16_2(lines = readData("day16.txt"))
-//        day16_2(lines = readData("day16.1.test.txt"))
+        day18_1(lines = readData("day18.txt"))
+//        day18_2(lines = readData("day18.txt"))
+//        day18_1(lines = readData("day18.1.test.txt"))
 
 
     }
